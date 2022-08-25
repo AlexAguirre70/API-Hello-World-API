@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const Schema = mongoose
+const {Schema} = mongoose
 
-const languageSchema({
+const languageSchema = new Schema({
     name:{type:String, required:true},
     greeting: String,
     pangram: String,

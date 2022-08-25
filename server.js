@@ -6,21 +6,23 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const PORT = process.env.PORT
 const app = express()
-const languagesController= require('./controllers/languages_controller.js')
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true}, 
     () => { console.log('connected to mongo: ', process.env.MONGO_URI) }
 )
 
 // MIDDLEWARE
 app.use(express.urlencoded({extended: true}))
-app.use('languages', languagesController)
+// Languages: 
+const languagesController = require('./controllers/languages_controller.js')
+app.use('/languages', languagesController)
+
 
 // ROUTES
 app.get('/', (req, res) => {
   res.send('Welcome to the Hello World! API')
 })
 // Index:
-languages.get('/', (req, res) => {
+app.get('/languages', (req,res) => {
   Language.find()
       .then(foundLanguages => {
           res.json(foundLanguages)
@@ -28,7 +30,7 @@ languages.get('/', (req, res) => {
 })
 
 // Show:
-languages.get('/:name', (req, res) => {
+app.get ('/languages/:name', (req, res) => {
   Language.findOne({ name: req.params.name .toLowerCase() })
       .then(foundLanguage => {
           res.json(foundLanguage)
